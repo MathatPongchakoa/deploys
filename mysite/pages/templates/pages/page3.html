@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page 3</title>
+  <style>
+    body {
+      display:flex; justify-content:center; align-items:center; height:100vh; flex-direction:column;
+    }
+    h1 {
+      font-size: 40px;
+      opacity: 0;
+      animation: fadeIn 3s forwards, bounce 2s infinite 3s;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    #trickBtn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 ยินดีด้วย! คุณเป็นเกย์ 🎉</h1>
+
+  <button id="trickBtn" onclick="goHome()">กลับไปหน้าแรก</button>
+
+  <script>
+    const btn = document.getElementById("trickBtn");
+    let moves = 0;
+    let canClick = false;
+
+    btn.addEventListener("mouseover", () => {
+      if (!canClick && moves < 3) {
+        const offsetX = Math.floor(Math.random() * 200 - 100); // -100 ถึง 100
+        const offsetY = Math.floor(Math.random() * 200 - 100);
+        btn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        moves++;
+        if (moves >= 3) {
+          canClick = true; // หลังจากหนีครบ 3 ครั้ง กดได้แล้ว
+          btn.style.transform = "translate(0,0)";
+        }
+      }
+    });
+
+    function goHome() {
+      if (canClick) {
+        window.location.href = "{% url 'page1' %}";
+      }
+    }
+  </script>
+</body>
+</html>
